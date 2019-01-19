@@ -1,0 +1,5 @@
+{
+  //移除mui的严格模式
+  "ignore":['./src/assets/mui/js/mui.js'],
+  "plugins": ["transform-remove-strict-mode"]
+}
