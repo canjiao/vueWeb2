@@ -2,14 +2,14 @@
     <div class="newlist">
         
         <ul class="mui-table-view">
-            <li class="mui-table-view-cell mui-media">
-                <router-link :to="'/new/newdetail/'+id">
-                    <img class="mui-media-object mui-pull-left" src="https://p0.ssl.qhimgs4.com/dmfd/125_71_/t01ab439cca3cf7a038.jpg?size=640x960">
+            <li class="mui-table-view-cell mui-media" v-for="item in newlist" :key="item.id">
+                <router-link :to="'/new/newdetail/'+item.id">
+                    <img class="mui-media-object mui-pull-left" :src="item.imgurl">
                     <div class="mui-media-body">
-                        <div>幸福</div>
+                        <div>{{item.title}}</div>
                         <p class="mui-ellipsis">
                             <span>发表时间：{{new Date() | dataFormat('YYYY-MM-DD HH:mm:ss')}}</span>
-                            <span>点击：0次</span>
+                            <span>点击：{{item.tapNum}}次</span>
                         </p>
                     </div>
                 </router-link>
@@ -22,8 +22,20 @@
 export default {
     data () {
         return {
-            id:1,
+            newlist:[],
         }
+    },
+    methods:{
+        //获取列表
+        getNewlist(){
+            this.$http.post("/newlist")
+            .then(res=>{
+                this.newlist=res.data.newlist;
+            })
+        }
+    },
+    created(){
+        this.getNewlist();
     }
 }
 </script>

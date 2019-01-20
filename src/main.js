@@ -44,6 +44,9 @@ Vue.filter("dataFormat", function(datastr,pattern="YYYY-MM-DD HH:mm:ss"){
   return moment(datastr).format(pattern)
 })
 
+//导入vue-preview 图片预览包
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 
 Vue.config.productionTip = false
 
