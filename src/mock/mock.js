@@ -61,7 +61,7 @@ Mock.mock("/photodetail",function(){
 //商品购买
 Mock.mock("/goodslist",function(){
     return Mock.mock({
-        "goodslist|10":[
+        "goodslist|5":[
             {
                 "id|+1":1,
                 "imgurl":"@dataImage(400x800,'商品图片')",
@@ -72,5 +72,19 @@ Mock.mock("/goodslist",function(){
                 "num|0-100":0
             }
         ]
+    })
+})
+//商品详情
+Mock.mock("/goodsdetail",function(){
+    return Mock.mock({
+        "goodsInfo":{
+            "imgurl":"@dataImage(400x220,'商品图片')",
+            "title":"@cword(10)",
+            "newsprice|2000-5000":2000,   
+            "oldsprice|2000-5000":2000, 
+            "number":"@id()",
+            "inventory|1-200":0,
+            "time":"@datetime()",
+        }
     })
 })

@@ -3,9 +3,7 @@
       <!-- <transition-group name="left"> -->
         <!-- header -->
         <mt-header fixed title="vue·项目" key="header">
-          <router-link to="/" slot="left">
-            <mt-button icon="back">返回</mt-button>
-          </router-link>
+          <mt-button icon="back" slot="left" @click.native="returnTo">返回</mt-button>
           <mt-button icon="more" slot="right"></mt-button>
         </mt-header>
 
@@ -24,7 +22,7 @@
             <span class="mui-tab-label">会员</span>
           </router-link>
           <router-link class="mui-tab-item-llb" to="/shopCar">
-            <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+            <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="mui-badge">{{$store.getters.allGoodsNum}}</span></span>
             <span class="mui-tab-label">购物车</span>
           </router-link>
           <router-link class="mui-tab-item-llb" to="/search">
@@ -45,8 +43,13 @@ export default {
     }
   },
   methods:{
-    
+    returnTo(){
+      this.$router.go(-1);
+    }
   },
+  created () {
+    
+  }
 };
 </script>
 

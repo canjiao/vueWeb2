@@ -1,9 +1,9 @@
 <template>
-    <div class="goodslist">
-        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="flag">
+    <div class="goodslist" id="goodslist">
+        <!-- <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="flag"> -->
         <ul>
             <li v-for="item in goodslist" :key="item.id">
-                <router-link class="goodsinfo" to="" tag="div">
+                <router-link class="goodsinfo" :to="'/home/goodsdetail/'+item.id" tag="div">
                     <img :src="item.imgurl" alt="">
                     <h4>{{item.title}}</h4>
                     <div class="goodsli_bd">
@@ -19,43 +19,73 @@
                 </router-link>
             </li>
         </ul>
-        </mt-loadmore> 
+        <div class="loadImg" v-show="loading"><img src="../../../assets/images/loading.gif" alt="">正在加载中...</div>
+        <!-- </mt-loadmore>  -->
     </div>
 </template>
 <script>
+//这是导入自写的一个上拉加载更多的组件
+import upLoadMore from "../../../components/upLoadMore.vue"
+
 export default {
     data () {
         return {
-            pageIndex:0,
+            pageIndex:1,
             goodslist:[],
             flag:false,
-            allLoaded:false,
+            loading:false,//正在加载中
+            allLoaded:false, //全部加载了,无更多数据
         }
     },
     methods: {
-        //加载更多
+        //加载更多  这是mint-ui的loadmore 注意：用这个组件需要给其父元素一个高度，且父元素比子元素的高度小
         loadBottom(){
-            // this.getCatesList()
+            // this.getGoodslist()
             setTimeout(() => {
-                console.log(111)
+                //加载完成后要加上这个，让组件重新计算高度
                 this.$refs.loadmore.onBottomLoaded();
             }, 5000);
         },
+
+        //获得商品列表
         getGoodslist(){
             this.$http.post('/goodslist',{'pageIndex':this.pageIndex})
             .then(res=>{
-                this.goodslist=res.data.goodslist;
+                this.goodslist=this.goodslist.concat(res.data.goodslist);
+                this.loading=false;
+            })
+        },
+        //滚动条到达底部后上滑加载更多
+        getMore(){
+            //使用自写的加载更多的组件的方法 参数1：滑动哪一个元素需要加载更多  参数2：手指松开后的回调函数
+            upLoadMore.upLoadMore(".goodslist",()=>{
+                //这里的回调函数触发的条件是：1.滚动条到达底部 2.向上滑动的距离大于120(默认值可修改)
+                console.log("回调函数")
+                this.pageIndex++;
+                this.getGoodslist();
+                this.loading=true;
             })
         }
     },
-    created () {
+    mounted () {
         this.getGoodslist();
+        //这里只是初始化一下这个滑动组件；页面刚进来的时候由于没有滑动屏幕所以并没有执行加载更多里面的回调函数
+        this.getMore();
     }       
 }
 </script>
 <style lang="less">
     .goodslist{
-        ul{display: flex; justify-content: flex-start; flex-wrap: wrap;padding:0 5px;}
+        .loadImg{
+            line-height: 32px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: -32px;
+            img{vertical-align: bottom;}
+        }
+        // height: calc(100vh - 90px);
+        .mint-loadmore{padding-bottom: 55px;}
+        ul{display: flex; justify-content: flex-start; flex-wrap: wrap;padding:0 5px 10px;}
         li{
             width: 50%;padding: 10px 5px 0;list-style: none;
             .goodsinfo{

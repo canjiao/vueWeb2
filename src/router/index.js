@@ -14,6 +14,7 @@ import newdetail from "../view/home/new/newdetail.vue"
 import photoList from "../view/home/photoList/photoList.vue"
 import photodetail from "../view/home/photoList/photodetail.vue"
 import goodslist from "../view/home/goods/goodslist.vue"
+import goodsdetail from "../view/home/goods/goodsdetail.vue"
 
 let router = new Router({
     routes: [
@@ -32,6 +33,7 @@ let router = new Router({
         {path:"/home/photoList",component:photoList},
         {path:"/home/photodetail/:id",component:photodetail},
         {path:"/home/goodslist",component:goodslist},
+        {path:"/home/goodsdetail/:id",component:goodsdetail},
         /*{
             path: "/luyouName2",
             component: luyouName2,
