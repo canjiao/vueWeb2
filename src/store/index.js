@@ -25,16 +25,56 @@ let store = new Vuex.Store({
             }
             //把商品信息本地存储
             localStorage.setItem("goodsMsg",JSON.stringify(state.goodsMsg));
+        },
+        changeGoodMsg_num(state,opt){  //购物车中的数量改变商品信息
+            state.goodsMsg.some(item=>{
+                if(item.id==opt.id){
+                    item.num=parseInt(opt.num);
+                    return true;
+                }
+            })
+            //把修改的商品信息本地存储
+            localStorage.setItem("goodsMsg",JSON.stringify(state.goodsMsg));
+        },
+        changeGoodMsg_select(state,opt){  //购物车中的选中状态改变商品信息
+            state.goodsMsg.some(item=>{
+                if(item.id==opt.id){
+                    item.selected=opt.selected;
+                }
+            })
+            //把修改的商品信息本地存储
+            localStorage.setItem("goodsMsg",JSON.stringify(state.goodsMsg));
+        },
+        removeGoodMsg(state,id){   //删除商品信息
+            state.goodsMsg.some((item,index)=>{
+                if(item.id==id){
+                    state.goodsMsg.splice(index,1);
+                    return true;
+                }
+            })
+            //把修改的商品信息本地存储
+            localStorage.setItem("goodsMsg",JSON.stringify(state.goodsMsg));
         }
     },
     getters:{  //相当于computed
-        allGoodsNum(state){
+        allGoodsNum(state){  //获取购物车中所有商品的数量
             let all = 0;
             state.goodsMsg.forEach(item => {
                 all +=item.num
             });
             return all;
-        }
+        },
+        allGoodsNumAndPrice_select(state){  //购物车中已勾选的商品数量及总价格
+            let allNum = 0 , allPrice = 0;
+            state.goodsMsg.forEach(item=>{
+                if(item.selected){
+                    allNum +=item.num;
+                    allPrice += item.num*parseInt(item.price);
+                }
+            })
+            return {allNum,allPrice};
+        },
+        
     }
 })
 export default store

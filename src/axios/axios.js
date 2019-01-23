@@ -21,7 +21,7 @@ axios.interceptors.request.use(
         if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
             config.headers.Authorization = `Bearer ${token}`;   //  ``  es6新语法
         }else{
-            console.log('token不存在')
+            // console.log('token不存在')
         }
         return config;
     },

@@ -71,7 +71,6 @@ export default {
   watch: {
     "goodsInfo.inventory":{
       handler(newVal){
-        console.log(newVal)
         setTimeout(()=>{
           this.mui(".mui-numbox").numbox().setOption('max',parseInt(newVal))
         },2000)
@@ -88,6 +87,7 @@ export default {
         id:this.$route.params.id,
         price:this.goodsInfo.newsprice,
         num:this.mui(".mui-numbox").numbox().getValue(),
+        selected:true,
       }
       this.$store.commit("setGoodsMsg",goodsMsg);  //把数据交给vuex中的mutations中的方法处理
     },
@@ -134,17 +134,20 @@ export default {
 </script>
 <style lang="less">
 .goodsdetail {
+  background: #eee;
+  overflow: hidden;
   .swiper{
     img{width: 100%;}
   }
+  .mint-button--small{margin-right: 20px;}
   .ball {
     width: 15px;
     height: 15px;
     background: red;
     border-radius: 50%;
     position: absolute;
-    left: 150px;
-    top: 210px;
+    left: 153px;
+    top: 396px;
     z-index: 99;
   }
   .mui-card-footer {

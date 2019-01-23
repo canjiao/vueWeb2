@@ -3,7 +3,7 @@
       <!-- <transition-group name="left"> -->
         <!-- header -->
         <mt-header fixed title="vue·项目" key="header">
-          <mt-button icon="back" slot="left" @click.native="returnTo">返回</mt-button>
+          <mt-button icon="back" slot="left" @click.native="returnTo" v-show="flag">返回</mt-button>
           <mt-button icon="more" slot="right"></mt-button>
         </mt-header>
 
@@ -40,7 +40,23 @@ export default {
   data(){
     return {
       selected:'首页',
+      flag:true,
+
+      /* routePath:this.$route.path   
+          注意:获取当前的路由路径用this.$route.path ;在各个子组件均能这样定义获取到当前的路由路径
+      */
     }
+  },
+  watch:{
+    //监听当前页面的路由路径变化  ps:这里后面得写function(){};用es6的箭头函数()=>{}不起作用，亲测 不知道为啥
+    "$route.path":function(newVal){
+      console.log(this.$route.path)
+      if(newVal=="/home"){
+        this.flag=false;
+      }else{
+        this.flag=true;
+      }
+    },
   },
   methods:{
     returnTo(){
