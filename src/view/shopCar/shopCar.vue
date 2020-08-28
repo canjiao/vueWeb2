@@ -59,7 +59,7 @@ export default {
             this.$store.commit("removeGoodMsg",id)
         }
     },
-    created () {
+    mounted () {
         this.$nextTick(()=>{
             this.mui(".mui-numbox").numbox();
             this.mui(".mui-numbox").numbox().setOption('max',10)
