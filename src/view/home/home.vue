@@ -4,7 +4,7 @@
     <!-- 轮播图 -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><span style="background:red;">Slide 1分支修改</span></div>
+        <div class="swiper-slide"><span style="background:red;">Slide 1</span></div>
         <div class="swiper-slide"><span style="background:yellow;">Slide 2</span></div>
         <div class="swiper-slide"><span style="background:blue;">Slide 3</span></div>
       </div>
